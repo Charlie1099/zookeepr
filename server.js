@@ -35,12 +35,30 @@ function fillterByQuerry(query, animalsArray) {
     return fillteredResults;
 }
 
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0]
+    return result
+}
+
+
+
+
 app.get("/api/animals", (req, res) => {
    let results = animals;
    if (req.query) {
        results = fillterByQuerry(req.query, results);
    }
     res.json(results);
+});
+
+app.get("/api/animals/:id", (req, res) => {
+    const results = findById(req.params.id, animals);
+        if (results) {
+           res.json(result); 
+        } else {
+            res.send(404);
+        }
+        
 });
 
 app.listen(PORT, () => {

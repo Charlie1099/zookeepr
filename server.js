@@ -104,6 +104,11 @@ app.post("/api/animals", (req, res) => {
     res.json(req.body);
 });
 
+app.get("/", (req, res) => {
+    // res.sendFile(path.join(__dirname, "./public/index.html"));
+    res.send(`<h1>Hi</h1>`)
+});
+
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });

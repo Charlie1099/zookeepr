@@ -4,10 +4,12 @@ const path = require("path");
 const express = require("express");
 
 const { animals } = require("./data/animals.json");
+const { response } = require("express");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -42,6 +44,8 @@ function fillterByQuerry(query, animalsArray) {
     }
     return fillteredResults;
 }
+
+
 
 function findById(id, animalsArray) {
     const result = animalsArray.filter(animal => animal.id === id)[0]
@@ -104,9 +108,17 @@ app.post("/api/animals", (req, res) => {
     res.json(req.body);
 });
 
-app.get("/", (req, res) => {
-    // res.sendFile(path.join(__dirname, "./public/index.html"));
-    res.send(`<h1>Hi</h1>`)
+app.get("/animals", (req, res) => {
+     res.sendFile(path.join(__dirname, "./public/index.html"));
+    
+});
+
+app.get("/zookeepers", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public/zookeepers.html"));
+});
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 app.listen(PORT, () => {
